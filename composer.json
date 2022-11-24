@@ -3,7 +3,9 @@
         "symfony/console": "^6.1",
         "ext-xmlreader": "*",
         "ext-simplexml": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-ftp": "*",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {

@@ -16,7 +16,7 @@ class CSVExporter extends Exporter
             $this->filename .= '.csv';
         }
 
-        $this->outputFileStream = fopen($this->directory . '/' . $this->filename, 'w');
+        $this->outputFileStream = fopen($this->directory . '\\' . $this->filename, 'w');
 
         if (!$this->outputFileStream) {
             throw new Exception('File open failed.');
