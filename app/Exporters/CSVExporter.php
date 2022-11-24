@@ -12,7 +12,11 @@ class CSVExporter extends Exporter
     public function __construct(private string $filename,private string $directory, private string $separator)
     {
 
-        $this->outputFileStream = fopen(RESOURCES_DIR . '/' . $this->filename, 'w');
+        if(!str_contains($filename, '.csv')){
+            $this->filename .= '.csv';
+        }
+
+        $this->outputFileStream = fopen($this->directory . '/' . $this->filename, 'w');
 
         if (!$this->outputFileStream) {
             throw new Exception('File open failed.');
@@ -30,13 +34,13 @@ class CSVExporter extends Exporter
 
     public function initialize(array $header): void
     {
-        fputcsv($this->outputFileStream, $header);
+        fputcsv($this->outputFileStream, $header,$this->separator);
         //header written
     }
 
     public function writeItem(array $item): void
     {
-        fputcsv($this->outputFileStream,$item);
+        fputcsv($this->outputFileStream,$item,$this->separator);
         //item written
     }
 
