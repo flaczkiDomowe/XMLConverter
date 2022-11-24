@@ -4,7 +4,7 @@ namespace App;
 
 class Config
 {
-    const SQLITE_PATH='database/my_database.db';
+    const SQLITE_PATH=__DIR__.'\database\sqlite_database.db';
     const SQLITE_GUEST_USERNAME='username113';
     const SQLITE_GUEST_PASSWORD='113113';
 

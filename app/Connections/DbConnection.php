@@ -4,12 +4,14 @@ namespace App\Connections;
 
 use PDO;
 
-class DbConnection extends Connection
+abstract class DbConnection extends Connection
 {
 
     protected function connect()
     {
         $this->conn = new PDO($this->address);
     }
+
+    abstract public function createTable(string $tableName, array $columns);
 
 }

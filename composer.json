@@ -5,7 +5,8 @@
         "ext-simplexml": "*",
         "ext-dom": "*",
         "ext-ftp": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
