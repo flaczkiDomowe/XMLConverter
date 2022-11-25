@@ -16,12 +16,11 @@ class SQLiteConnection extends DbConnection
 
     public function createTable(string $tableName, array $columns)
     {
-        $sqlCommand = 'CREATE TABLE IF NOT EXISTS' . $tableName . '(';
+        $sqlCommand = 'CREATE TABLE IF NOT EXISTS ' . $tableName . '(';
         foreach($columns as $value){
             $sqlCommand .= " ".$value." TEXT";
         }
         $sqlCommand .= ")";
-
         $this->conn->exec($sqlCommand);
     }
 }

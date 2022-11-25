@@ -6,7 +6,8 @@
         "ext-ftp": "*",
         "ext-pdo": "*",
         "phpunit/phpunit": "^9.5",
-        "symfony/console": "^6.1"
+        "symfony/console": "^6.1",
+        "ext-sqlite3": "*"
     },
     "autoload": {
         "psr-4": {

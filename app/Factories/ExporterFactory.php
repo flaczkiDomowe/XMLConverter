@@ -2,7 +2,10 @@
 
 namespace App\Factories;
 
+use App\Connections\SQLiteConnection;
 use App\Exporters\CSVExporter;
+use App\Exporters\SqlDbExporter;
+use App\Exporters\SqliteExporter;
 use Exception;
 
 class ExporterFactory
@@ -17,6 +20,13 @@ class ExporterFactory
         } catch (Exception $e){
             die("Problem occured during CSV file creation");
         }
+        return $exporter;
+    }
+
+    public static function getSqliteExporter(string $itemName)
+    {
+        $sqliteConnection = new SQLiteConnection();
+        $exporter = new SqliteExporter($sqliteConnection ,$itemName);
         return $exporter;
     }
 }

@@ -77,8 +77,13 @@ class ImportXMLCommand extends Command
             case 'ftp':
 
                 $inputFilename = $input->getOption('filename');
-                if(!$inputFilename){
-                    die("File name not specified");
+                if(!$inputFilename) {
+                    $helper = $this->getHelper('question');
+                    $question = new Question('Please enter the name of file: ');
+                    $inputFilename = $helper->ask($input, $output, $question);
+                    if (!$inputFilename) {
+                        die("File name not specified");
+                    }
                 }
                 $path = $input->getOption('path') ?? '.';
                 $credentials = $this->getFtpCredentials($input,$output);
@@ -114,6 +119,7 @@ class ImportXMLCommand extends Command
 
         switch($destination){
             case 'sqlite':
+                $exporter = ExporterFactory::getSqliteExporter($itemName);
                 break;
             case 'csv':
             default:

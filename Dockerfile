@@ -11,6 +11,7 @@ RUN alias composer='php composer.phar'
 RUN mkdir XMLConverter
 COPY ./app/ ./XMLConverter/app/
 COPY README.md composer.json application.php ./XMLConverter/
+COPY ./resources/ ./XMLConverter/resources/
 WORKDIR ./XMLConverter/
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer

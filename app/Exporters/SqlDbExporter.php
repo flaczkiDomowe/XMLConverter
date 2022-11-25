@@ -6,19 +6,9 @@ use App\Connections\DbConnection;
 use App\Connections\SQLiteConnection;
 use App\Factories\ExporterFactory;
 
-class SqlDbExporter extends Exporter
+abstract class SqlDbExporter extends Exporter
 {
-    public function __construct(private DbConnection $conn)
+    public function __construct(private DbConnection $conn, string $tableName)
     {
-    }
-
-    function initialize(array $header): void
-    {
-        // TODO: Implement initialize() method.
-    }
-
-    function writeItem(array $item): void
-    {
-        // TODO: Implement writeItem() method.
     }
 }
