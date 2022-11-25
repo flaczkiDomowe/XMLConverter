@@ -23,3 +23,5 @@ composer install
 **Przykładowe komendy:**
 
 php application.php import-xml -o ftp -d csv --filename_output testowyplik -i item -f coffee_feed.xml
+
+Zdaję sobie sprawę z wielu niedociągnieć w tym kodzie, chętnie o nim porozmawiam.
