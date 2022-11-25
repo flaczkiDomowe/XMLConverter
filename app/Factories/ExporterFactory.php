@@ -18,6 +18,7 @@ class ExporterFactory
         try {
             $exporter = new CSVExporter($outputFileName, $directory, $separator);
         } catch (Exception $e){
+            error_log($e->getMessage());
             die("Problem occured during CSV file creation");
         }
         return $exporter;

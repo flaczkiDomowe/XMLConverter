@@ -26,6 +26,9 @@ class HttpConverter extends Converter
 
         $doc = new DOMDocument;
         $inputStream = XMLReader::open($this->importer->getUrl());
+        if(!$inputStream){
+            throw new Exception('Failed to open file');
+        }
 
         while ($inputStream->read() && $inputStream->name !== $elementName) ;
 

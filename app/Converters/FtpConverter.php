@@ -27,6 +27,9 @@ class FtpConverter extends FileConverter
 
         $doc = new DOMDocument;
         $inputStream = XMLReader::open($this->importer->getFileDir());
+        if(!$inputStream){
+            throw new Exception('Failed to open file');
+        }
 
         while ($inputStream->read() && $inputStream->name !== $elementName);
 

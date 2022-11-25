@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use App\Factories\ConverterFactory;
 use App\Factories\ExporterFactory;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -116,9 +117,12 @@ class ImportXMLCommand extends Command
                 $exporter = ExporterFactory::getCSVExporter($outputFileName,$outputPath,$separator);
                 break;
         }
-
-        $converter->convertXML($exporter,$itemName);
-
+        try {
+            $converter->convertXML($exporter, $itemName);
+        } catch (Exception $e){
+            error_log($e->getMessage());
+            die($e->getMessage());
+        }
         echo "Import finished successfully";
         return Command::SUCCESS;
 
