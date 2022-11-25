@@ -15,9 +15,9 @@ class SQLiteConnection extends DbConnection
 
     public function createTable(string $tableName, array $columns)
     {
-        $sqlCommand = 'CREATE TABLE IF NOT EXISTS ' . $tableName . '(';
+        $sqlCommand = "CREATE TABLE IF NOT EXISTS '" . SqlUtils::sql_escape($tableName) . "' (";
         foreach($columns as $value){
-            $sqlCommand .= " ".$value." TEXT,";
+            $sqlCommand .= " '".SqlUtils::sql_escape($value)."' TEXT,";
         }
         $sqlCommand=substr($sqlCommand, 0, -1);
         $sqlCommand .= ")";
@@ -30,15 +30,17 @@ class SQLiteConnection extends DbConnection
         foreach ($array as $col => $val){
             if ($col === array_key_last($array)) {
                 $sqlCommand .= $col . ' ';
-                $secondPart .= "'".$val."'" . ' ';
+                $secondPart .= "?" . ' ';
             } else {
                 $sqlCommand .= $col . ', ';
-                $secondPart .= "'".$val."'" . ', ';
+                $secondPart .= "?" . ', ';
             }
         }
 
         $sqlCommand.=') '.$secondPart.')';
-        $this->conn->exec($sqlCommand);
+
+        $stmt = $this->conn->prepare($sqlCommand);
+        $stmt->execute(array_values($array));;
     }
 
 }

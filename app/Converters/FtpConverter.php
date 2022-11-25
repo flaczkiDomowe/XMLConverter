@@ -30,8 +30,13 @@ class FtpConverter extends FileConverter
         while ($inputStream->read() && $inputStream->name !== $elementName);
 
         $header = null;
-
+        echo "Importing start".PHP_EOL;
+        $iterator=0;
         while ($inputStream->name === $elementName) {
+            $iterator++;
+            if($iterator%50==0){
+                echo "Downloaded ".$iterator.' elements.'.PHP_EOL;
+            }
             $node = simplexml_import_dom($doc->importNode($inputStream->expand(), true));
             if (!$header) {
                 $exporter->initialize(array_keys(get_object_vars($node)));

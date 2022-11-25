@@ -8,7 +8,7 @@ use App\Factories\ExporterFactory;
 
 abstract class SqlDbExporter extends Exporter
 {
-    public function __construct(private DbConnection $conn, string $tableName)
+    public function __construct(protected DbConnection $conn, protected string $tableName)
     {
     }
 }

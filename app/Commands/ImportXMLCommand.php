@@ -107,9 +107,15 @@ class ImportXMLCommand extends Command
             case 'local':
             default:
                 $inputFilename = $input->getOption('filename');
-                if(!$inputFilename){
-                    die("Element file not specified");
+                if(!$inputFilename) {
+                    $helper = $this->getHelper('question');
+                    $question = new Question('Please enter the name of file: ');
+                    $inputFilename = $helper->ask($input, $output, $question);
+                    if (!$inputFilename) {
+                        die("File name not specified");
+                    }
                 }
+
                 $path = $input->getOption('path') ?? RESOURCES_DIR;
                 $converter = ConverterFactory::getLocalFileConverter($inputFilename,$path);
                 break;
