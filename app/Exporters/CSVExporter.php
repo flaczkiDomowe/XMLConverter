@@ -16,32 +16,26 @@ class CSVExporter extends Exporter
             $this->filename .= '.csv';
         }
 
-        $this->outputFileStream = fopen($this->directory . '\\' . $this->filename, 'w');
-
+        $this->outputFileStream = fopen($this->directory . '/' . $this->filename, 'w');
         if (!$this->outputFileStream) {
             throw new Exception('File open failed.');
-            // log file open failed
         }
 
-        //log file open success
     }
 
     public function __destruct()
     {
         fclose($this->outputFileStream);
-        // log file closed
     }
 
     public function initialize(array $header): void
     {
         fputcsv($this->outputFileStream, $header,$this->separator);
-        //header written
     }
 
     public function writeItem(array $item): void
     {
         fputcsv($this->outputFileStream,$item,$this->separator);
-        //item written
     }
 
 }

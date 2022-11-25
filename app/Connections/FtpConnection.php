@@ -7,8 +7,22 @@ use Exception;
 class FtpConnection extends Connection
 {
 
+    public function __construct(string $address, string $username, string $password)
+    {
+        parent::__construct($address,$username,$password);
+        $this->deleteFtpFromAddress($address);
+    }
+
+    private function deleteFtpFromAddress(string $address){
+        if(str_contains($address, 'ftp://')){
+            str_replace('ftp://', '', $address);
+        }
+        return $address;
+    }
+
     protected function connect()
     {
+
         $this->conn = ftp_connect($this->address);
 
         if(!$this->conn){

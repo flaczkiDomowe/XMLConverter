@@ -19,7 +19,7 @@ class FtpImporter extends FileImporter
     protected function prepareFile()
     {
         $conn_id = $this->connection->getConnection();
-        if (ftp_get($conn_id, RESOURCES_DIR.'\\'.FtpConverter::TEMPORARY_FILENAME, $this->dir.'\\'.$this->fileName, FTP_BINARY)) {
+        if (ftp_get($conn_id, RESOURCES_DIR.'/'.FtpConverter::TEMPORARY_FILENAME, $this->dir.'/'.$this->fileName, FTP_BINARY)) {
            // log success copied file
         }
         else {
@@ -29,7 +29,7 @@ class FtpImporter extends FileImporter
 
         ftp_close($conn_id);
 
-        $this->fileDir=RESOURCES_DIR . '\\' . FtpConverter::TEMPORARY_FILENAME;
+        $this->fileDir=RESOURCES_DIR . '/' . FtpConverter::TEMPORARY_FILENAME;
         if (!file_exists($this->fileDir)) {
             throw new Exception('File not found.');
         }

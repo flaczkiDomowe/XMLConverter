@@ -40,6 +40,6 @@ class FtpConverter extends FileConverter
             $exporter->writeItem(get_object_vars($node));
             $inputStream->next($elementName);
         }
-        unlink(RESOURCES_DIR.'\\'.self::TEMPORARY_FILENAME);
+        unlink(RESOURCES_DIR.'/'.self::TEMPORARY_FILENAME);
     }
 }

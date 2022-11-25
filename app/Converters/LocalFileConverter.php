@@ -5,6 +5,7 @@ namespace App\Converters;
 use App\Exporters\Exporter;
 use App\Importers\LocalFileImporter;
 use DOMDocument;
+use Exception;
 use XMLReader;
 
 class LocalFileConverter extends FileConverter
@@ -24,7 +25,9 @@ class LocalFileConverter extends FileConverter
 
         $doc = new DOMDocument;
         $inputStream = XMLReader::open($this->importer->getFileDir());
-
+        if(!$inputStream){
+            throw new Exception('Failed to open file');
+        }
         while ($inputStream->read() && $inputStream->name !== $elementName);
 
         $header = null;

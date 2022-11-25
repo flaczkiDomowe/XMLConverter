@@ -1,12 +1,12 @@
 {
     "require": {
-        "symfony/console": "^6.1",
         "ext-xmlreader": "*",
         "ext-simplexml": "*",
         "ext-dom": "*",
         "ext-ftp": "*",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/console": "^6.1"
     },
     "autoload": {
         "psr-4": {

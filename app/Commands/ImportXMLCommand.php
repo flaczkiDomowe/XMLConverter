@@ -63,6 +63,7 @@ class ImportXMLCommand extends Command
         $origin = $input->getOption('origin');
         $destination =  $input->getOption('destination');
         $itemName = $input->getOption('item_name');
+
         if(!$itemName){
             $helper=$this->getHelper('question');
             $question = new Question('Please enter the name of type elements you wish to import: ');
@@ -77,7 +78,7 @@ class ImportXMLCommand extends Command
 
                 $inputFilename = $input->getOption('filename');
                 if(!$inputFilename){
-                    die("Element name not specified");
+                    die("File name not specified");
                 }
                 $path = $input->getOption('path') ?? '.';
                 $credentials = $this->getFtpCredentials($input,$output);
@@ -102,7 +103,7 @@ class ImportXMLCommand extends Command
             default:
                 $inputFilename = $input->getOption('filename');
                 if(!$inputFilename){
-                    die("Element name not specified");
+                    die("Element file not specified");
                 }
                 $path = $input->getOption('path') ?? RESOURCES_DIR;
                 $converter = ConverterFactory::getLocalFileConverter($inputFilename,$path);
