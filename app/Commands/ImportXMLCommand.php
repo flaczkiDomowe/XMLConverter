@@ -138,7 +138,7 @@ class ImportXMLCommand extends Command
 
         $converter->convertXML($exporter,$itemName);
 
-
+        echo "Import finished successfully";
         return Command::SUCCESS;
 
     }

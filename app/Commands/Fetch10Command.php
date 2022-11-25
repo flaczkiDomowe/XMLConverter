@@ -15,11 +15,13 @@ class Fetch10Command extends Command
     {
         $table = $input->getArgument('tablename');
         $connection = ConnectionFactory::getSQLiteConnection();
-        $results = $connection->getConnection()->query('SELECT * FROM '.$table. "LIMIT 10");
+        $query = 'SELECT * FROM '.$table. " LIMIT 10";
+        $results = $connection->getConnection()->query($query);
         while(  $row = $results->fetch(PDO::FETCH_ASSOC)){
             foreach($row as $val){
-                echo $val.PHP_EOL;
+                echo $val.'  ';
             }
+            echo PHP_EOL;
         }
         return Command::SUCCESS;
     }
