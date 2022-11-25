@@ -5,6 +5,7 @@ namespace App\Converters;
 use App\Exporters\Exporter;
 use App\Importers\HttpImporter;
 use DOMDocument;
+use Exception;
 use XMLReader;
 
 class HttpConverter extends Converter
@@ -41,7 +42,11 @@ class HttpConverter extends Converter
                 $exporter->initialize(array_keys(get_object_vars($node)));
                 $header = true;
             }
-            $exporter->writeItem(get_object_vars($node));
+            try {
+                $exporter->writeItem(get_object_vars($node));
+            } catch (Exception $exception){
+                error_log($exception->getMessage());
+            }
             $inputStream->next($elementName);
         }
 

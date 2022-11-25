@@ -19,12 +19,9 @@ class FtpImporter extends FileImporter
     protected function prepareFile()
     {
         $conn_id = $this->connection->getConnection();
-        if (ftp_get($conn_id, RESOURCES_DIR.'/'.FtpConverter::TEMPORARY_FILENAME, $this->dir.'/'.$this->fileName, FTP_BINARY)) {
-           // log success copied file
-        }
-        else {
+        if (!ftp_get($conn_id, RESOURCES_DIR.'/'.FtpConverter::TEMPORARY_FILENAME, $this->dir.'/'.$this->fileName, FTP_BINARY))
+        {
             throw new Exception('Problem occured during downloading file to local system.');
-            //log failed
         }
 
         ftp_close($conn_id);

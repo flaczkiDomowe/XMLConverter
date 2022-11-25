@@ -43,7 +43,11 @@ class LocalFileConverter extends FileConverter
                 $exporter->initialize(array_keys(get_object_vars($node)));
                 $header = true;
             }
-            $exporter->writeItem(get_object_vars($node));
+            try {
+                $exporter->writeItem(get_object_vars($node));
+            } catch (Exception $exception){
+                error_log($exception->getMessage());
+            }
             $inputStream->next($elementName);
         }
     }

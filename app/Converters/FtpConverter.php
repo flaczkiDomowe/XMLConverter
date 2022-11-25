@@ -5,6 +5,7 @@ namespace App\Converters;
 use App\Exporters\Exporter;
 use App\Importers\FtpImporter;
 use DOMDocument;
+use Exception;
 use XMLReader;
 
 class FtpConverter extends FileConverter
@@ -13,7 +14,7 @@ class FtpConverter extends FileConverter
     const TEMPORARY_FILENAME = 'temporary_file';
 
     /**
-     * @param FtpImporter $localFileImporter
+     * @param FtpImporter $ftpImporter
      */
     function __construct(FtpImporter $ftpImporter)
     {
@@ -42,7 +43,11 @@ class FtpConverter extends FileConverter
                 $exporter->initialize(array_keys(get_object_vars($node)));
                 $header = true;
             }
-            $exporter->writeItem(get_object_vars($node));
+            try {
+                $exporter->writeItem(get_object_vars($node));
+            } catch (Exception $exception){
+                error_log($exception->getMessage());
+            }
             $inputStream->next($elementName);
         }
         unlink(RESOURCES_DIR.'/'.self::TEMPORARY_FILENAME);

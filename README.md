@@ -4,6 +4,10 @@ na Docker'a, ponieważ nie używałem go dotychczas w pracy.
 
 Setup:
 docker build -t xml .
+
 docker run -t -d --net=host xml
+
 sprawdzamy docker ps nazwe kontera
+
 docker exec -it nazwa_kontenera php application.php
+

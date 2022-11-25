@@ -33,58 +33,47 @@ class ImportXMLCommand extends Command
             ->addOption('item_name','i',InputOption::VALUE_REQUIRED,'You need to select name of xml element you wish to get');
     }
 
+    private function getInformation(InputInterface $i, OutputInterface $o,string $message):string
+    {
+        $helper = $this->getHelper('question');
+        $question = new Question($message);
+        return $helper->ask($i, $o, $question);
+    }
+
     private function getFtpCredentials(InputInterface $input, OutputInterface $output):array{
 
         $address = $input->getOption('ftp_host');
-        if(!$address) {
-            $helper = $this->getHelper('question');
-            $question = new Question('Please enter ftp server address: ');
-            $address = $helper->ask($input, $output, $question);
-        }
+        $address = $address ?? $this->getInformation($input,$output,'Enter host address: ');
 
         $username = $input->getOption('ftp_username');
-        if(!$username) {
-            $helper = $this->getHelper('question');
-            $question = new Question('Please enter ftp username: ');
-            $username = $helper->ask($input, $output, $question);
-        }
+        $username = $username ?? $this->getInformation($input,$output,'Enter ftp username: ');
 
         $password = $input->getOption('ftp_password');
-        if(!$password) {
-            $helper = $this->getHelper('question');
-            $question = new Question('Please enter ftp password: ');
-            $password = $helper->ask($input, $output, $question);
-        }
+        $password = $password ?? $this->getInformation($input,$output,'Please enter ftp password: ');
+
         return ['address' => $address,'username' => $username, 'password' => $password];
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $origin = $input->getOption('origin');
-        $destination =  $input->getOption('destination');
+        $destination = $input->getOption('destination');
         $itemName = $input->getOption('item_name');
 
+        $itemName = $itemName ?? $this->getInformation($input,$output,'Please enter the name of type elements you wish to import: ');
         if(!$itemName){
-            $helper=$this->getHelper('question');
-            $question = new Question('Please enter the name of type elements you wish to import: ');
-            $itemName = $helper->ask($input, $output, $question);
-            if(!$itemName){
-                die('Element name not specified');
-            }
+            die('Element name not specified');
         }
         $converter=null;
         switch($origin){
             case 'ftp':
 
                 $inputFilename = $input->getOption('filename');
-                if(!$inputFilename) {
-                    $helper = $this->getHelper('question');
-                    $question = new Question('Please enter the name of file: ');
-                    $inputFilename = $helper->ask($input, $output, $question);
-                    if (!$inputFilename) {
-                        die("File name not specified");
-                    }
+                $inputFilename = $inputFilename ?? $this->getInformation($input,$output,'Please enter the name of input file: ');
+                if (!$inputFilename) {
+                    die("File name not specified");
                 }
+
                 $path = $input->getOption('path') ?? '.';
                 $credentials = $this->getFtpCredentials($input,$output);
                 $converter = ConverterFactory::getFtpConverter($inputFilename, $path, $credentials['address'], $credentials['username'], $credentials['password']);
@@ -93,13 +82,9 @@ class ImportXMLCommand extends Command
             case 'http':
 
                 $url = $input->getOption('url');
+                $url = $url ?? $this->getInformation($input,$output,'Please enter xml api url: ');
                 if(!$url){
-                    $helper=$this->getHelper('question');
-                    $question = new Question('Please enter xml api url: ');
-                    $url = $helper->ask($input, $output, $question);
-                    if(!$url){
-                        die('Url not specified');
-                    }
+                    die('Url not specified');
                 }
                 $converter = ConverterFactory::getHttpConverter($url);
 
@@ -107,13 +92,9 @@ class ImportXMLCommand extends Command
             case 'local':
             default:
                 $inputFilename = $input->getOption('filename');
-                if(!$inputFilename) {
-                    $helper = $this->getHelper('question');
-                    $question = new Question('Please enter the name of file: ');
-                    $inputFilename = $helper->ask($input, $output, $question);
-                    if (!$inputFilename) {
-                        die("File name not specified");
-                    }
+                $inputFilename = $inputFilename ?? $this->getInformation($input,$output,'Please enter the name of input file: ');
+                if (!$inputFilename) {
+                    die("File name not specified");
                 }
 
                 $path = $input->getOption('path') ?? RESOURCES_DIR;
