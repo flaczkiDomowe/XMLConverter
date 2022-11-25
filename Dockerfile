@@ -17,5 +17,6 @@ WORKDIR ./XMLConverter/
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install
 RUN mkdir database
+RUN mkdir log
 RUN /usr/bin/sqlite3 ./database/sqlite_database.db
 CMD /bin/bash
