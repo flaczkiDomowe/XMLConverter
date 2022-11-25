@@ -17,5 +17,5 @@ abstract class DbConnection extends Connection
     }
 
     abstract public function createTable(string $tableName, array $columns);
-
+    abstract public function insert(string $table, array $values);
 }
